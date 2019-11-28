@@ -22,6 +22,10 @@
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>I need to get your videos</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>IMPACTED.ttf</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

@@ -8,18 +8,28 @@
 
 import UIKit
 
-
-
 extension UIView {
+  
+  enum ConstraintId {
+    static let aspectRatio = "aspectRatio"
+    static let height = "height"
+    static let width = "width"
+  }
   
   @discardableResult
   open func with<T: UIView>(height: CGFloat? = nil, width:CGFloat? = nil) -> T {
     translatesAutoresizingMaskIntoConstraints = false
     if let height = height {
-      heightAnchor.constraint(equalToConstant: height).isActive = true
+      removeConstraints(withIdentifier: ConstraintId.height)
+      let constraint = heightAnchor.constraint(equalToConstant: height)
+      constraint.identifier = ConstraintId.height
+      constraint.isActive = true
     }
     if let width = width {
-      widthAnchor.constraint(equalToConstant: width).isActive = true
+      removeConstraints(withIdentifier: ConstraintId.width)
+      let constraint = widthAnchor.constraint(equalToConstant: width)
+      constraint.identifier = ConstraintId.width
+      constraint.isActive = true
     }
     return self as! T
   }
@@ -39,50 +49,89 @@ extension UIView {
     guard let superview = superview else { return self as! T }
     translatesAutoresizingMaskIntoConstraints = false
     if let top = top {
-      if #available(iOS 11.0, *) {
-        topAnchor.constraint(equalTo: safely ? superview.safeAreaLayoutGuide.topAnchor : superview.topAnchor, constant: top).isActive = true
-      } else {
-        topAnchor.constraint(equalTo: safely ? superview.topAnchor : superview.topAnchor, constant: top).isActive = true
-      }
+      anchorTop(to: superview.getTopAnchor(withSafeArea: safely), by: top)
     }
     if let leading = leading {
-      if #available(iOS 11.0, *) {
-        leadingAnchor.constraint(equalTo: safely ? superview.safeAreaLayoutGuide.leadingAnchor : superview.leadingAnchor, constant: leading).isActive = true
-      } else {
-        leadingAnchor.constraint(equalTo: safely ? superview.leadingAnchor : superview.leadingAnchor, constant: leading).isActive = true
-      }
+      anchorLeading(to: superview.getLeadingAnchor(withSafeArea: safely), by: leading)
     }
     if let bottom = bottom {
-      if #available(iOS 11.0, *) {
-        bottomAnchor.constraint(equalTo: safely ? superview.safeAreaLayoutGuide.bottomAnchor : superview.bottomAnchor, constant: -bottom).isActive = true
-      } else {
-        bottomAnchor.constraint(equalTo: safely ? superview.bottomAnchor : superview.bottomAnchor, constant: -bottom).isActive = true
-      }
+      anchorBottom(to: superview.getBottomAnchor(withSafeArea: safely), by: bottom)
     }
     if let trailing = trailing {
-      if #available(iOS 11.0, *) {
-        trailingAnchor.constraint(equalTo: safely ? superview.safeAreaLayoutGuide.trailingAnchor : superview.trailingAnchor, constant: -trailing).isActive = true
-      } else {
-        trailingAnchor.constraint(equalTo: safely ? superview.trailingAnchor : superview.trailingAnchor, constant: -trailing).isActive = true
-      }
+      anchorTrailing(to: superview.getTrailingAnchor(withSafeArea: safely), by: trailing)
     }
     return self as! T
   }
   
   @discardableResult
-  func centerInSuperview<T: UIView>() -> T {
+  func anchorTop<T: UIView>(to anchor: NSLayoutYAxisAnchor, by constant: CGFloat) -> T {
+    translatesAutoresizingMaskIntoConstraints = false
+    topAnchor.constraint(equalTo: anchor, constant: constant).isActive = true
+    return self as! T
+  }
+  
+  @discardableResult
+  func anchorBottom<T: UIView>(to anchor: NSLayoutYAxisAnchor, by constant: CGFloat) -> T {
+    translatesAutoresizingMaskIntoConstraints = false
+    bottomAnchor.constraint(equalTo: anchor, constant: -constant).isActive = true
+    return self as! T
+  }
+  
+  @discardableResult
+  func anchorLeading<T: UIView>(to anchor: NSLayoutXAxisAnchor, by constant: CGFloat) -> T {
+    translatesAutoresizingMaskIntoConstraints = false
+    leadingAnchor.constraint(equalTo: anchor, constant: constant).isActive = true
+    return self as! T
+  }
+  
+  @discardableResult
+  func anchorTrailing<T: UIView>(to anchor: NSLayoutXAxisAnchor, by constant: CGFloat) -> T {
+    translatesAutoresizingMaskIntoConstraints = false
+    trailingAnchor.constraint(equalTo: anchor, constant: -constant).isActive = true
+    return self as! T
+  }
+  
+  @discardableResult
+  func centerInSuperview<T: UIView>(vertically: Bool = true, horizontally: Bool = true) -> T {
     guard let superview = superview else { return self as! T }
     translatesAutoresizingMaskIntoConstraints = false
+    if horizontally {
     centerXAnchor.constraint(equalTo: superview.centerXAnchor).isActive = true
+    }
+    if vertically {
     centerYAnchor.constraint(equalTo: superview.centerYAnchor).isActive = true
+    }
     return self as! T
   }
   
   func aspectRation<T: UIView>(_ ratio: CGFloat) -> T {
+    removeConstraints(withIdentifier: ConstraintId.aspectRatio)
     let constraint = NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: self, attribute: .width, multiplier: ratio, constant: 0)
+    constraint.identifier = ConstraintId.aspectRatio
     translatesAutoresizingMaskIntoConstraints = false
     constraint.isActive = true
     return self as! T
   }
+  
+  func removeConstraints(withIdentifier identifier: String) {
+    self.constraints.filter({ $0.identifier == identifier}).forEach{ $0.isActive = false }
+  }
 }
 
+extension UIView {
+  func getTopAnchor(withSafeArea safeArea: Bool) -> NSLayoutYAxisAnchor {
+    safeArea ? safeAreaLayoutGuide.topAnchor : topAnchor
+  }
+  
+  func getBottomAnchor(withSafeArea safeArea: Bool) -> NSLayoutYAxisAnchor {
+    safeArea ? safeAreaLayoutGuide.bottomAnchor : bottomAnchor
+  }
+  
+  func getLeadingAnchor(withSafeArea safeArea: Bool) -> NSLayoutXAxisAnchor {
+    safeArea ? safeAreaLayoutGuide.leadingAnchor : leadingAnchor
+  }
+  
+  func getTrailingAnchor(withSafeArea safeArea: Bool) -> NSLayoutXAxisAnchor {
+    safeArea ? safeAreaLayoutGuide.trailingAnchor : trailingAnchor
+  }
+}
