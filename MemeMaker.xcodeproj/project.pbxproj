@@ -15,8 +15,15 @@
 		D283411D238CA3BE00C992F0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D283411B238CA3BE00C992F0 /* LaunchScreen.storyboard */; };
 		D2834128238CA3BF00C992F0 /* MemeMakerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2834127238CA3BF00C992F0 /* MemeMakerTests.swift */; };
 		D2834134238D06AF00C992F0 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2834133238D06AF00C992F0 /* UIView.swift */; };
-		D2834136238D0C3D00C992F0 /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2834135238D0C3D00C992F0 /* ViewFactory.swift */; };
 		D2834138238DB6C200C992F0 /* IMPACTED.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D2834137238DB6C200C992F0 /* IMPACTED.ttf */; };
+		D283413A238FA92E00C992F0 /* ViewController+ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2834139238FA92E00C992F0 /* ViewController+ImagePicker.swift */; };
+		D283413C238FAE4200C992F0 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D283413B238FAE4200C992F0 /* Orientation.swift */; };
+		D283413E238FB22800C992F0 /* ViewController+Composition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D283413D238FB22800C992F0 /* ViewController+Composition.swift */; };
+		D2834140238FBE4600C992F0 /* UIButton+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = D283413F238FBE4600C992F0 /* UIButton+Style.swift */; };
+		D2834142238FBE7800C992F0 /* UITextView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2834141238FBE7800C992F0 /* UITextView+Style.swift */; };
+		D2834144238FBEA900C992F0 /* UIView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2834143238FBEA900C992F0 /* UIView+Style.swift */; };
+		D2834146238FBF5400C992F0 /* ViewControllerPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2834145238FBF5400C992F0 /* ViewControllerPreview.swift */; };
+		D2834149238FC0F000C992F0 /* ViewController+SetupViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2834148238FC0F000C992F0 /* ViewController+SetupViews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,8 +49,15 @@
 		D2834127238CA3BF00C992F0 /* MemeMakerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeMakerTests.swift; sourceTree = "<group>"; };
 		D2834129238CA3BF00C992F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2834133238D06AF00C992F0 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
-		D2834135238D0C3D00C992F0 /* ViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFactory.swift; sourceTree = "<group>"; };
 		D2834137238DB6C200C992F0 /* IMPACTED.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = IMPACTED.ttf; sourceTree = "<group>"; };
+		D2834139238FA92E00C992F0 /* ViewController+ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+ImagePicker.swift"; sourceTree = "<group>"; };
+		D283413B238FAE4200C992F0 /* Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orientation.swift; sourceTree = "<group>"; };
+		D283413D238FB22800C992F0 /* ViewController+Composition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Composition.swift"; sourceTree = "<group>"; };
+		D283413F238FBE4600C992F0 /* UIButton+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Style.swift"; sourceTree = "<group>"; };
+		D2834141238FBE7800C992F0 /* UITextView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Style.swift"; sourceTree = "<group>"; };
+		D2834143238FBEA900C992F0 /* UIView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Style.swift"; sourceTree = "<group>"; };
+		D2834145238FBF5400C992F0 /* ViewControllerPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerPreview.swift; sourceTree = "<group>"; };
+		D2834148238FC0F000C992F0 /* ViewController+SetupViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+SetupViews.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,11 +103,12 @@
 				D2834132238D069A00C992F0 /* Extensions */,
 				D2834110238CA3BD00C992F0 /* AppDelegate.swift */,
 				D2834112238CA3BD00C992F0 /* SceneDelegate.swift */,
-				D2834114238CA3BD00C992F0 /* ViewController.swift */,
 				D2834116238CA3BD00C992F0 /* Main.storyboard */,
 				D2834119238CA3BE00C992F0 /* Assets.xcassets */,
 				D283411B238CA3BE00C992F0 /* LaunchScreen.storyboard */,
 				D283411E238CA3BE00C992F0 /* Info.plist */,
+				D2834147238FC0C800C992F0 /* View Controller */,
+				D283413B238FAE4200C992F0 /* Orientation.swift */,
 			);
 			path = MemeMaker;
 			sourceTree = "<group>";
@@ -111,9 +126,23 @@
 			isa = PBXGroup;
 			children = (
 				D2834133238D06AF00C992F0 /* UIView.swift */,
-				D2834135238D0C3D00C992F0 /* ViewFactory.swift */,
+				D283413F238FBE4600C992F0 /* UIButton+Style.swift */,
+				D2834141238FBE7800C992F0 /* UITextView+Style.swift */,
+				D2834143238FBEA900C992F0 /* UIView+Style.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		D2834147238FC0C800C992F0 /* View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				D2834114238CA3BD00C992F0 /* ViewController.swift */,
+				D2834139238FA92E00C992F0 /* ViewController+ImagePicker.swift */,
+				D283413D238FB22800C992F0 /* ViewController+Composition.swift */,
+				D2834145238FBF5400C992F0 /* ViewControllerPreview.swift */,
+				D2834148238FC0F000C992F0 /* ViewController+SetupViews.swift */,
+			);
+			path = "View Controller";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -218,11 +247,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2834136238D0C3D00C992F0 /* ViewFactory.swift in Sources */,
 				D2834134238D06AF00C992F0 /* UIView.swift in Sources */,
+				D283413E238FB22800C992F0 /* ViewController+Composition.swift in Sources */,
+				D283413A238FA92E00C992F0 /* ViewController+ImagePicker.swift in Sources */,
+				D283413C238FAE4200C992F0 /* Orientation.swift in Sources */,
 				D2834115238CA3BD00C992F0 /* ViewController.swift in Sources */,
 				D2834111238CA3BD00C992F0 /* AppDelegate.swift in Sources */,
+				D2834146238FBF5400C992F0 /* ViewControllerPreview.swift in Sources */,
+				D2834142238FBE7800C992F0 /* UITextView+Style.swift in Sources */,
 				D2834113238CA3BD00C992F0 /* SceneDelegate.swift in Sources */,
+				D2834144238FBEA900C992F0 /* UIView+Style.swift in Sources */,
+				D2834140238FBE4600C992F0 /* UIButton+Style.swift in Sources */,
+				D2834149238FC0F000C992F0 /* ViewController+SetupViews.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
