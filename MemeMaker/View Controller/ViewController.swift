@@ -26,6 +26,67 @@ class ViewController: UIViewController {
   let playerContainer = UIView.playerContainer
   let dismissButton = UIButton()
   
+  var status: Status = .ready {
+    didSet {
+      updateView(with: status)
+    }
+  }
+  
+  func updateView(with status: Status) {
+    textView.isHidden = true
+    getVideoButton.isHidden = true
+    composeButton.isHidden = true
+    saveButton.isHidden = true
+    switch status {
+      
+    case .ready:
+      getVideoButton.isHidden = false
+    case .imported:
+      textView.isHidden = false
+      getVideoButton.isHidden = false
+      composeButton.isHidden = false
+      /*
+       Video Player
+       //TextView
+       //Add new video button
+       Need to change the text
+       //compose button
+       slider for size
+       buttons for color
+       */
+    case .composing:
+      print("Progress")
+      /*
+       Progress
+       Video Player
+       No Buttons
+       No text
+       */
+    case .composed:
+      getVideoButton.isHidden = false
+      saveButton.isHidden = false
+      /*
+       //Compose new Video
+       //Save Button
+       No text view
+       Video Player
+       No compose
+       */
+    case .saved:
+      getVideoButton.isHidden = false
+      /*
+      Compose new Video
+      No Save Button
+      No text view
+      Maybe no Video Player
+      No compose
+      */
+    }
+    UIView.animate(withDuration: 0.3) {
+      self.view.layoutIfNeeded()
+    }
+  }
+  
   var preferredTransform = CGAffineTransform.identity
   
   var mediaURL: URL? {
@@ -40,11 +101,38 @@ class ViewController: UIViewController {
     setupViews()
   }
   
+  var composer = Composer()
+  
   @objc func requestImage() { getMedia() }
-  @objc func compose() { composeWithText(textView.text ?? "") }
+  @objc func compose() {
+    guard let mediaURL = mediaURL else { return }
+    status = .composing
+    
+    let textLayer = composer.createTextLayerForVideo(at: mediaURL, text: textView.text, playerSize: playerContainer.frame.size, textViewSize: textView.frame.size)
+    composer.composeVideo(at: mediaURL, withLayer: textLayer) { result in
+      switch result {
+      case .success(let url):
+        DispatchQueue.main.async {
+          self.status = .composed
+          self.mediaURL = url
+        }
+      case .failure(let error):
+        print(error.localizedDescription)
+      }
+    }
+  }
   @objc func saveComposition() {
     guard let mediaURL = mediaURL else { return }
-    saveVideo(with: mediaURL)
+    composer.saveVideo(with: mediaURL) { result in
+      switch result {
+      case .success:
+        DispatchQueue.main.async {
+          self.status = .saved
+        }
+      case .failure(let error):
+        print(error.localizedDescription)
+      }
+    }
   }
   @objc func dismissKeyboard() -> Bool {
     textView.resignFirstResponder()

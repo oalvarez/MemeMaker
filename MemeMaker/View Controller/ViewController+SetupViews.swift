@@ -10,7 +10,7 @@ import UIKit
 
 extension ViewController {
   func setupViews() {
-    
+    status = .ready
     setupDismissButton()
     view.addVStack(playerContainer,
                    getVideoButton,

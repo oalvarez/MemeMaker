@@ -19,6 +19,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
     guard let url = info[.mediaURL] as? URL else { return }
     self.dismiss(animated: true) {
+      self.status = .imported
       self.mediaURL = url
     }
   }
