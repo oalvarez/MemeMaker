@@ -1,5 +1,5 @@
 //
-//  UIView.swift
+//  UIView+Autolayout.swift
 //  MemeMaker
 //
 //  Created by Oscar Alvarez Hidalgo on 11/25/19.
@@ -30,6 +30,21 @@ extension UIView {
       let constraint = widthAnchor.constraint(equalToConstant: width)
       constraint.identifier = ConstraintId.width
       constraint.isActive = true
+    }
+    return self as! T
+  }
+  
+  @discardableResult
+  open func update<T: UIView>(height: CGFloat? = nil, width:CGFloat? = nil) -> T {
+    if let height = height {
+      guard let constraint = constraints.first(where: { $0.identifier == ConstraintId.height })
+        else { return self as! T }
+      constraint.constant = height
+    }
+    if let width = width {
+      guard let constraint = constraints.first(where: { $0.identifier == ConstraintId.width })
+        else { return self as! T }
+      constraint.constant = width
     }
     return self as! T
   }
@@ -133,22 +148,5 @@ extension UIView {
   
   func getTrailingAnchor(withSafeArea safeArea: Bool) -> NSLayoutXAxisAnchor {
     safeArea ? safeAreaLayoutGuide.trailingAnchor : trailingAnchor
-  }
-}
-
-extension UIView {
-  @discardableResult
-  func addVStack(_ views: UIView...,
-                   spacing: CGFloat = 16,
-                   alignment: UIStackView.Alignment = .center,
-                   distribution: UIStackView.Distribution = .fill) -> UIStackView {
-    let stackView = UIStackView(arrangedSubviews: views)
-    stackView.axis = .vertical
-    stackView.spacing = spacing
-    stackView.alignment = alignment
-    stackView.distribution = distribution
-    addSubview(stackView)
-    stackView.fillSuperView()
-    return stackView
   }
 }

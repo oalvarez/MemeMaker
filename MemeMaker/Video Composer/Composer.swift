@@ -18,11 +18,18 @@ class Composer {
   }
   
   ///Compose a video with the layer that is passed
-  public func composeVideo(at url: URL, withLayer layer: CALayer, completion: @escaping (Result<URL, Error>) -> Void) {
+  public func composeVideo(at                 url: URL,
+                           withLayer        layer: CALayer,
+                           trackProgress progress: @escaping (Float) -> Void,
+                           then        completion: @escaping (Result<URL, Error>) -> Void) {
     let composition = createComposition(with: url)
     let layerComposition = prepareLayersForVideo(at: url, withLayer: layer, andComposition: composition)
     let movieDestinationUrl = destinationURL(withFileName: "Composed.mov")
-    exportAsset(composition, with: layerComposition, at: movieDestinationUrl,completion: completion)
+    exportAsset(with:          composition,
+                at:            movieDestinationUrl,
+                with:          layerComposition,
+                trackProgress: progress,
+                then:          completion)
   }
   
   ///Create a composition to work with from the video located at the url passed
@@ -51,9 +58,11 @@ class Composer {
   }
   
   ///Use the composition and add the layer to the video located at the url
-  private func prepareLayersForVideo(at url:URL, withLayer layer: CALayer, andComposition composition: AVComposition) -> AVVideoComposition {
+  private func prepareLayersForVideo(at                     url: URL,
+                                     withLayer            layer: CALayer,
+                                     andComposition composition: AVComposition) -> AVVideoComposition {
     let videoLayer = CALayer()
-    let size = getFinalSize(fromURL: url)
+    let size = getFinalSizeForVideo(at: url)
     videoLayer.frame = CGRect(origin: .zero, size: size)
     
     let parentLayer = CALayer()
@@ -63,7 +72,8 @@ class Composer {
     
     let transform = getPrefferedTransformForVideo(at: url)
     
-    let layerComposition = addInstructions(to: composition, withTransform: transform)
+    let layerComposition = addInstructions(to: composition,
+                                           withTransform: transform)
     layerComposition.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videoLayer, in: parentLayer)
     layerComposition.frameDuration = CMTimeMake(value: 1, timescale: 30)
     layerComposition.renderSize = size
@@ -78,25 +88,43 @@ class Composer {
     let movieFilePath = docsDir.appendingPathComponent(name)
     return URL(fileURLWithPath: movieFilePath)
   }
-  
+  var exportSession: AVAssetExportSession?
   ///Creates a session that extorts the final video to a final url
-  func exportAsset(_ composition: AVComposition, with layer: AVVideoComposition, at url: URL, completion: @escaping (Result<URL, Error>) -> Void) {
-    let assetExport = AVAssetExportSession(asset: composition, presetName:AVAssetExportPresetHighestQuality)
-    assetExport?.outputFileType = .mov
-    assetExport?.videoComposition = layer
-    assetExport?.outputURL = url
+  func exportAsset(with     composition: AVComposition,
+                   at               url: URL,
+                   with           layer: AVVideoComposition,
+                   trackProgress handle: @escaping (Float) -> Void,
+                   then      completion: @escaping (Result<URL, Error>) -> Void) {
+    exportSession = AVAssetExportSession(asset: composition, presetName:AVAssetExportPresetHighestQuality)
+    exportSession?.outputFileType = .mov
+    exportSession?.videoComposition = layer
+    exportSession?.outputURL = url
     try? FileManager.default.removeItem(at: url)
     
-    assetExport?.exportAsynchronously(completionHandler: {
-      switch assetExport!.status {
+    let progressTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true, block: { timer in
+      let progress = Float((self.exportSession?.progress)!)
+      handle(progress)
+    })
+    
+    exportSession?.exportAsynchronously(completionHandler: {
+      progressTimer.invalidate()
+      switch self.exportSession!.status {
       case .completed: completion(.success(url))
       default:         completion(.failure(CompositorError.exporting))
       }
     })
   }
   
+  func cancelExport() {
+    guard exportSession != nil else { return }
+    exportSession?.cancelExport()
+    exportSession = nil
+  }
+  
+  //var progressTimer = Timer()
+  
   ///Return the size of the video ar url. It varys from vertical and horizontal
-  func getFinalSize(fromURL url: URL) -> CGSize {
+  func getFinalSizeForVideo(at url: URL) -> CGSize {
     let videoAssetSource = AVAsset(url: url)
     guard let videoTrack = videoAssetSource.tracks(withMediaType: AVMediaType.video).first else { return .zero }
     return Orientation
@@ -112,25 +140,33 @@ class Composer {
   }
   
   ///Creates a Text Layer to add to the composition
-  public func createTextLayerForVideo(at url: URL, text: String, playerSize: CGSize, textViewSize: CGSize) -> CALayer {
-    let size = getFinalSize(fromURL: url)
+  public func createTextLayerForVideo(at url:       URL,
+                                      text:         String,
+                                      fontName:     String,
+                                      playerSize:   CGSize,
+                                      textViewSize: CGSize) -> CALayer {
+    let size = getFinalSizeForVideo(at: url)
     let playerVideoRatio = size.height/playerSize.height
 
     let textLayer = CATextLayer()
     textLayer.backgroundColor = UIColor.clear.cgColor
     textLayer.string = text
-    textLayer.font = UIFont(name: "IMPACTED", size: 28)
+    textLayer.font = UIFont(name: fontName, size: 28)
     textLayer.fontSize = playerVideoRatio * 28
     textLayer.isWrapped = true
     textLayer.shadowOpacity = 0.5
     textLayer.foregroundColor = UIColor.white.cgColor
     textLayer.alignmentMode = CATextLayerAlignmentMode.center
-    textLayer.frame = CGRect(x: playerVideoRatio*3, y: playerVideoRatio * 10, width: size.width - playerVideoRatio*6, height: playerVideoRatio * textViewSize.height - 8*playerVideoRatio)
+    textLayer.frame = CGRect(x: playerVideoRatio * 3,
+                             y: playerVideoRatio * 10,
+                             width: size.width - playerVideoRatio * 6,
+                             height: playerVideoRatio * textViewSize.height - 8 * playerVideoRatio)
     return textLayer
   }
   
   ///Add the instructions to the composition
-  func addInstructions(to composition: AVComposition, withTransform transform: CGAffineTransform) -> AVMutableVideoComposition {
+  func addInstructions(to          composition: AVComposition,
+                       withTransform transform: CGAffineTransform) -> AVMutableVideoComposition {
     let layerComposition = AVMutableVideoComposition()
     //Instructions
     let instruction = AVMutableVideoCompositionInstruction()
@@ -144,7 +180,8 @@ class Composer {
   }
   
   ///Save video to the roll
-  public func saveVideo(with url: URL, completion: @escaping (Result<Void, Error>) -> Void) {
+  public func saveVideo(with        url: URL,
+                        then completion: @escaping (Result<Void, Error>) -> Void) {
     PHPhotoLibrary.shared().performChanges({
       PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL:url)
     }) { saved, error in

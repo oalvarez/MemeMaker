@@ -9,82 +9,27 @@
 import UIKit
 import AVKit
 
-enum Status {
-  case ready
-  case imported
-  case composing
-  case composed
-  case saved
-}
-
 class ViewController: UIViewController {
 
+  enum Status {
+    case ready
+    case imported
+    case composing
+    case composed
+    case saved
+  }
+  
   let getVideoButton = UIButton.myButton(withTitle: "Get Video")
   let composeButton = UIButton.myButton(withTitle: "Compose")
   let saveButton = UIButton.myButton(withTitle: "Save to Roll")
+  let cancelButton = UIButton.myButton(withTitle: "Cancel")
   let textView = UITextView.memeText(withTitle: "Introduce Text")
   let playerContainer = UIView.playerContainer
   let dismissButton = UIButton()
+  let progressBar: ProgressBar = ProgressBar(with: "Composing...")
   
   var status: Status = .ready {
-    didSet {
-      updateView(with: status)
-    }
-  }
-  
-  func updateView(with status: Status) {
-    textView.isHidden = true
-    getVideoButton.isHidden = true
-    composeButton.isHidden = true
-    saveButton.isHidden = true
-    switch status {
-      
-    case .ready:
-      getVideoButton.isHidden = false
-    case .imported:
-      textView.isHidden = false
-      getVideoButton.isHidden = false
-      composeButton.isHidden = false
-      /*
-       Video Player
-       //TextView
-       //Add new video button
-       Need to change the text
-       //compose button
-       slider for size
-       buttons for color
-       */
-    case .composing:
-      print("Progress")
-      /*
-       Progress
-       Video Player
-       No Buttons
-       No text
-       */
-    case .composed:
-      getVideoButton.isHidden = false
-      saveButton.isHidden = false
-      /*
-       //Compose new Video
-       //Save Button
-       No text view
-       Video Player
-       No compose
-       */
-    case .saved:
-      getVideoButton.isHidden = false
-      /*
-      Compose new Video
-      No Save Button
-      No text view
-      Maybe no Video Player
-      No compose
-      */
-    }
-    UIView.animate(withDuration: 0.3) {
-      self.view.layoutIfNeeded()
-    }
+    didSet { updateView(with: status) }
   }
   
   var preferredTransform = CGAffineTransform.identity
@@ -108,8 +53,17 @@ class ViewController: UIViewController {
     guard let mediaURL = mediaURL else { return }
     status = .composing
     
-    let textLayer = composer.createTextLayerForVideo(at: mediaURL, text: textView.text, playerSize: playerContainer.frame.size, textViewSize: textView.frame.size)
-    composer.composeVideo(at: mediaURL, withLayer: textLayer) { result in
+    let textLayer = composer.createTextLayerForVideo(at:           mediaURL,
+                                                     text:         textView.text,
+                                                     fontName:     "IMPACTED",
+                                                     playerSize:   playerContainer.frame.size,
+                                                     textViewSize: textView.frame.size)
+    
+    composer.composeVideo(at: mediaURL,
+                          withLayer: textLayer,
+                          trackProgress: { progress in
+      self.progressBar.update(with: progress)
+    }) { result in
       switch result {
       case .success(let url):
         DispatchQueue.main.async {
@@ -117,10 +71,14 @@ class ViewController: UIViewController {
           self.mediaURL = url
         }
       case .failure(let error):
+        DispatchQueue.main.async {
+          self.status = .imported
+        }
         print(error.localizedDescription)
       }
     }
   }
+  
   @objc func saveComposition() {
     guard let mediaURL = mediaURL else { return }
     composer.saveVideo(with: mediaURL) { result in
@@ -137,16 +95,19 @@ class ViewController: UIViewController {
   @objc func dismissKeyboard() -> Bool {
     textView.resignFirstResponder()
   }
+  @objc func cancelExport() {
+    composer.cancelExport()
+  }
 }
 
 extension ViewController {
   
   func preparePlayer(with url: URL) {
     let videoWidth = getVideoWidth(ofVideoFrom: url, andPlayerFrame: playerContainer.frame)
-    textView.with(width: videoWidth)
-    
     let player = AVPlayer(url: url)
     let playerLayer = AVPlayerLayer(player: player)
+    
+    textView.with(width: videoWidth)
     playerLayer.frame = self.playerContainer.bounds
     self.playerContainer.layer.sublayers?.removeAll(where: { $0 is AVPlayerLayer } )
     self.playerContainer.layer.addSublayer(playerLayer)
