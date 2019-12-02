@@ -1,5 +1,6 @@
 # MemeMaker
 Meme maker as an interview test For Wizars Lab
+
 ##Functionalities
 1. Import a video from the Photos app
 2. Edit a text that appears in screen
