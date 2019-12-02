@@ -149,7 +149,7 @@ class Composer {
   }
   
   ///Creates a Text Layer to add to the composition
-  public func createTextLayerForVideo(with configuration: Configuration) -> CALayer {
+  func createTextLayerForVideo(with configuration: Configuration) -> CALayer {
     let size = getFinalSizeForVideo(at: configuration.mediaURL)
     let playerVideoRatio = size.height/configuration.playerSize.height
 

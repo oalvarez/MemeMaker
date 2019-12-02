@@ -9,7 +9,6 @@
 import UIKit
 import AVKit
 
-
 class PlayerView: UIView {
 
   let controlsView = ControlsView()

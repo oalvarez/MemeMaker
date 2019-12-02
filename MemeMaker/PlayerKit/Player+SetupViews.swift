@@ -10,8 +10,6 @@ import UIKit
 
 extension PlayerView {
   
-  
-  
   func setupViews() {
     layer.addSublayer(playerLayer)
     fillView(with: controlsView)

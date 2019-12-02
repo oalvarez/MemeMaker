@@ -136,26 +136,26 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		D243B27D2393393B0046E61B /* Video Composer */ = {
+		D243B27D2393393B0046E61B /* ComposerKit */ = {
 			isa = PBXGroup;
 			children = (
 				D283413D238FB22800C992F0 /* Composer.swift */,
 				D283413B238FAE4200C992F0 /* Orientation.swift */,
 			);
-			path = "Video Composer";
+			path = ComposerKit;
 			sourceTree = "<group>";
 		};
-		D243B2802394204B0046E61B /* Player */ = {
+		D243B2802394204B0046E61B /* PlayerKit */ = {
 			isa = PBXGroup;
 			children = (
+				D243B27E23934C3E0046E61B /* PlayerView.swift */,
 				D243B2812394207F0046E61B /* ControlsView.swift */,
+				D243B28923942C600046E61B /* Player+SetupViews.swift */,
 				D243B283239421440046E61B /* PlayerStatus.swift */,
 				D243B285239426730046E61B /* ControlsHandler.swift */,
-				D243B27E23934C3E0046E61B /* PlayerView.swift */,
 				D243B28723942A270046E61B /* Player+Style.swift */,
-				D243B28923942C600046E61B /* Player+SetupViews.swift */,
 			);
-			path = Player;
+			path = PlayerKit;
 			sourceTree = "<group>";
 		};
 		D243B28F2394CCA60046E61B /* Utilities */ = {
@@ -199,8 +199,8 @@
 		D283410F238CA3BD00C992F0 /* MemeMaker */ = {
 			isa = PBXGroup;
 			children = (
-				D243B2802394204B0046E61B /* Player */,
-				D243B27D2393393B0046E61B /* Video Composer */,
+				D243B2802394204B0046E61B /* PlayerKit */,
+				D243B27D2393393B0046E61B /* ComposerKit */,
 				D243B2902394CFBF0046E61B /* Alert */,
 				D243B27B239338D00046E61B /* Autolayout */,
 				D243B27A2393385D0046E61B /* Styling */,
