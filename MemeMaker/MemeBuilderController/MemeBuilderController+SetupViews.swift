@@ -66,11 +66,13 @@ extension MemeBuilderController {
     case .composing:
       progressBar.isHidden = false
       cancelButton.isHidden = false
+      textView.resignFirstResponder()
     case .composed:
       getVideoButton.isHidden = false
       saveButton.isHidden = false
     case .saved:
       getVideoButton.isHidden = false
+      presentSimpleAlert(withTitle: "Congrats!", message: "Video Meme has been saved!")
     }
     UIView.animate(withDuration: 0.3) {
       self.view.layoutIfNeeded()
