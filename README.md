@@ -1,5 +1,5 @@
 # MemeMaker
-Meme maker as an interview test For Wizars Lab
+Meme maker as an interview test For Wizar Labs
 
 ## Functionalities
 1. Import a video from the Photos app
