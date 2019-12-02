@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MemeBuilderController.swift
 //  MemeMaker
 //
 //  Created by Oscar Alvarez Hidalgo on 11/25/19.
@@ -9,7 +9,7 @@
 import UIKit
 import AVKit
 
-class ViewController: UIViewController {
+class MemeBuilderController: UIViewController {
 
   enum Status {
     case ready
@@ -57,12 +57,8 @@ class ViewController: UIViewController {
     guard let mediaURL = mediaURL else { return }
     status = .composing
     
-    let textLayer = composer.createTextLayerForVideo(at:           mediaURL,
-                                                     text:         textView.text,
-                                                     fontSize:     fontSize,
-                                                     fontName:     fontName,
-                                                     playerSize:   playerContainer.frame.size,
-                                                     textViewSize: textView.frame.size)
+    let configuration = createConfiguration(with: mediaURL)
+    let textLayer = composer.createTextLayerForVideo(with: configuration)
     composer.composeVideo(at: mediaURL,
                           withLayer: textLayer,
                           trackProgress: { progress in
@@ -101,39 +97,5 @@ class ViewController: UIViewController {
   }
   @objc func cancelExport() {
     composer.cancelExport()
-  }
-}
-
-extension ViewController {
-  
-  func preparePlayer(with url: URL) {
-    
-    let videoWidth = composer.getVideoWidth(ofVideoFrom: url,
-                                            andPlayerFrame: playerContainer.frame)
-    textView.with(width: videoWidth)
-    playerView.preparePlayer(for: url)
-    playerContainer.bringSubviewToFront(textView)
-  }
-  
-  func preparePlayer2(with url: URL) {
-    let videoWidth = composer.getVideoWidth(ofVideoFrom: url, andPlayerFrame: playerContainer.frame)
-    let player = AVPlayer(url: url)
-    let playerLayer = AVPlayerLayer(player: player)
-    
-    textView.with(width: videoWidth)
-    playerLayer.frame = self.playerContainer.bounds
-    self.playerContainer.layer.sublayers?.removeAll(where: { $0 is AVPlayerLayer } )
-    self.playerContainer.layer.addSublayer(playerLayer)
-    player.play()
-    self.playerContainer.bringSubviewToFront(textView)
-  }
-  
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
-    for layer in playerContainer.layer.sublayers ?? [] {
-      if layer is AVPlayerLayer {
-        layer.frame = playerContainer.bounds
-      }
-    }
   }
 }

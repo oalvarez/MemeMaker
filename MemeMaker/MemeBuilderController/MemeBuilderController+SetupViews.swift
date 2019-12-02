@@ -1,5 +1,5 @@
 //
-//  ViewController+SetupViews.swift
+//  MemeBuilderController+SetupViews.swift
 //  MemeMaker
 //
 //  Created by Oscar Alvarez Hidalgo on 11/28/19.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension ViewController {
+extension MemeBuilderController {
   func setupViews() {
     status = .ready
     setupStack()
@@ -61,10 +61,8 @@ extension ViewController {
       textView.isHidden = false
       getVideoButton.isHidden = false
       composeButton.isHidden = false
-      /*
-       slider for size
-       buttons for color
-       */
+      textView.becomeFirstResponder()
+      //Could set size, color and font
     case .composing:
       progressBar.isHidden = false
       cancelButton.isHidden = false

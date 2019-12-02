@@ -1,5 +1,5 @@
 //
-//  ViewControllerPreview.swift
+//  MemeBuilderControllerPreview.swift
 //  MemeMaker
 //
 //  Created by Oscar Alvarez Hidalgo on 11/28/19.
@@ -8,10 +8,10 @@
 
 import SwiftUI
 
-struct ViewController_Previews: PreviewProvider {
+struct MemeBuilderController_Previews: PreviewProvider {
   struct ViewControllerRepresentable: UIViewRepresentable {
     func makeUIView(context: Context) -> UIView {
-      ViewController().view
+      MemeBuilderController().view
     }
     
     func updateUIView(_ view: UIView, context: Context) {

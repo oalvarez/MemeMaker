@@ -12,6 +12,15 @@ import Photos
 
 class Composer {
   
+  struct Configuration {
+    let mediaURL: URL
+    let text: String
+    let fontSize: CGFloat
+    let fontName: String
+    let playerSize: CGSize
+    let textViewSize: CGSize
+  }
+  
   enum CompositorError: Error {
     case exporting
     case unknown
@@ -82,13 +91,15 @@ class Composer {
   }
   
   ///Returns the url where the video will be located after composing and exporting
-  func destinationURL(withFileName name: String) -> URL {
+  private func destinationURL(withFileName name: String) -> URL {
     let dirPaths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
     let docsDir = dirPaths[0] as NSString
     let movieFilePath = docsDir.appendingPathComponent(name)
     return URL(fileURLWithPath: movieFilePath)
   }
+  
   var exportSession: AVAssetExportSession?
+  
   ///Creates a session that extorts the final video to a final url
   func exportAsset(with     composition: AVComposition,
                    at               url: URL,
@@ -122,7 +133,7 @@ class Composer {
   }
   
   ///Return the size of the video ar url. It varys from vertical and horizontal
-  func getFinalSizeForVideo(at url: URL) -> CGSize {
+  private func getFinalSizeForVideo(at url: URL) -> CGSize {
     let videoAssetSource = AVAsset(url: url)
     guard let videoTrack = videoAssetSource.tracks(withMediaType: AVMediaType.video).first else { return .zero }
     return Orientation
@@ -131,27 +142,22 @@ class Composer {
   }
   
   ///Get the preffered transformation fo a video at a URL. It will change with orientation
-  func getPrefferedTransformForVideo(at url: URL) -> CGAffineTransform {
+  private func getPrefferedTransformForVideo(at url: URL) -> CGAffineTransform {
     let videoAssetSource = AVAsset(url: url)
     guard let videoTrack = videoAssetSource.tracks(withMediaType: AVMediaType.video).first else { return .identity }
     return videoTrack.preferredTransform
   }
   
   ///Creates a Text Layer to add to the composition
-  public func createTextLayerForVideo(at url:       URL,
-                                      text:         String,
-                                      fontSize:     CGFloat,
-                                      fontName:     String,
-                                      playerSize:   CGSize,
-                                      textViewSize: CGSize) -> CALayer {
-    let size = getFinalSizeForVideo(at: url)
-    let playerVideoRatio = size.height/playerSize.height
+  public func createTextLayerForVideo(with configuration: Configuration) -> CALayer {
+    let size = getFinalSizeForVideo(at: configuration.mediaURL)
+    let playerVideoRatio = size.height/configuration.playerSize.height
 
     let textLayer = CATextLayer()
     textLayer.backgroundColor = UIColor.clear.cgColor
-    textLayer.string = text
-    textLayer.font = UIFont(name: fontName, size: fontSize)
-    textLayer.fontSize = playerVideoRatio * fontSize
+    textLayer.string = configuration.text
+    textLayer.font = UIFont(name: configuration.fontName, size: configuration.fontSize)
+    textLayer.fontSize = playerVideoRatio * configuration.fontSize
     textLayer.isWrapped = true
     textLayer.shadowOpacity = 0.5
     textLayer.foregroundColor = UIColor.white.cgColor
@@ -159,7 +165,7 @@ class Composer {
     textLayer.frame = CGRect(x: playerVideoRatio * 3,
                              y: playerVideoRatio * 10,
                              width: size.width - playerVideoRatio * 6,
-                             height: playerVideoRatio * textViewSize.height - 8 * playerVideoRatio)
+                             height: playerVideoRatio * configuration.textViewSize.height - 8 * playerVideoRatio)
     return textLayer
   }
   

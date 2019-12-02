@@ -1,5 +1,5 @@
 //
-//  ViewController+ImagePicker.swift
+//  MemeBuilderController+ImagePicker.swift
 //  MemeMaker
 //
 //  Created by Oscar Alvarez Hidalgo on 11/27/19.
@@ -8,7 +8,7 @@
 
 import UIKit
 import MobileCoreServices
-extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension MemeBuilderController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
   func getMedia() {
     let mediaPicker = UIImagePickerController()
     mediaPicker.delegate = self
