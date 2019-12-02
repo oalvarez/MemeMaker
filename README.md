@@ -1,14 +1,14 @@
 # MemeMaker
 Meme maker as an interview test For Wizars Lab
 
-##Functionalities
+## Functionalities
 1. Import a video from the Photos app
 2. Edit a text that appears in screen
 3. Get a new video or Compose the current video with the overlay text
 4. Show progress of the composition and allows to cancel it
 5. Save to Roll
 
-##App Arquitecture
+## App Arquitecture
 - **PlayerKit:** Library that constructs the player
 	- PlayerView
 	- ControlsView with Play button
@@ -25,7 +25,7 @@ Meme maker as an interview test For Wizars Lab
 	- Prepare the player
 	- Create configuration for composer
 
-##Next Steps
+## Next Steps
 1. Rework libraries, using protocols to expose the needed functions
 2. Convert the libraries into Swift Packages
 3. Add tests for libraries and for the main application
