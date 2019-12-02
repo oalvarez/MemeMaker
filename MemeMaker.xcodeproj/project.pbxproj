@@ -10,6 +10,12 @@
 		D243B274239236DA0046E61B /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D243B273239236DA0046E61B /* ProgressView.swift */; };
 		D243B276239331760046E61B /* ProgressBar+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = D243B275239331760046E61B /* ProgressBar+Style.swift */; };
 		D243B279239337CE0046E61B /* UIView+Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D243B278239337CE0046E61B /* UIView+Stack.swift */; };
+		D243B27F23934C3E0046E61B /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D243B27E23934C3E0046E61B /* PlayerView.swift */; };
+		D243B2822394207F0046E61B /* ControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D243B2812394207F0046E61B /* ControlsView.swift */; };
+		D243B284239421440046E61B /* PlayerStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = D243B283239421440046E61B /* PlayerStatus.swift */; };
+		D243B286239426730046E61B /* ControlsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D243B285239426730046E61B /* ControlsHandler.swift */; };
+		D243B28823942A270046E61B /* Player+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = D243B28723942A270046E61B /* Player+Style.swift */; };
+		D243B28A23942C600046E61B /* Player+SetupViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D243B28923942C600046E61B /* Player+SetupViews.swift */; };
 		D2834111238CA3BD00C992F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2834110238CA3BD00C992F0 /* AppDelegate.swift */; };
 		D2834113238CA3BD00C992F0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2834112238CA3BD00C992F0 /* SceneDelegate.swift */; };
 		D2834115238CA3BD00C992F0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2834114238CA3BD00C992F0 /* ViewController.swift */; };
@@ -24,7 +30,7 @@
 		D283413E238FB22800C992F0 /* Composer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D283413D238FB22800C992F0 /* Composer.swift */; };
 		D2834140238FBE4600C992F0 /* UIButton+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = D283413F238FBE4600C992F0 /* UIButton+Style.swift */; };
 		D2834142238FBE7800C992F0 /* UITextView+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2834141238FBE7800C992F0 /* UITextView+Style.swift */; };
-		D2834144238FBEA900C992F0 /* Player+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2834143238FBEA900C992F0 /* Player+Style.swift */; };
+		D2834144238FBEA900C992F0 /* PlayerContainer+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2834143238FBEA900C992F0 /* PlayerContainer+Style.swift */; };
 		D2834146238FBF5400C992F0 /* ViewControllerPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2834145238FBF5400C992F0 /* ViewControllerPreview.swift */; };
 		D2834149238FC0F000C992F0 /* ViewController+SetupViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2834148238FC0F000C992F0 /* ViewController+SetupViews.swift */; };
 /* End PBXBuildFile section */
@@ -43,6 +49,12 @@
 		D243B273239236DA0046E61B /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		D243B275239331760046E61B /* ProgressBar+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProgressBar+Style.swift"; sourceTree = "<group>"; };
 		D243B278239337CE0046E61B /* UIView+Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Stack.swift"; sourceTree = "<group>"; };
+		D243B27E23934C3E0046E61B /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
+		D243B2812394207F0046E61B /* ControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsView.swift; sourceTree = "<group>"; };
+		D243B283239421440046E61B /* PlayerStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerStatus.swift; sourceTree = "<group>"; };
+		D243B285239426730046E61B /* ControlsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsHandler.swift; sourceTree = "<group>"; };
+		D243B28723942A270046E61B /* Player+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Player+Style.swift"; sourceTree = "<group>"; };
+		D243B28923942C600046E61B /* Player+SetupViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Player+SetupViews.swift"; sourceTree = "<group>"; };
 		D283410D238CA3BD00C992F0 /* MemeMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemeMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2834110238CA3BD00C992F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D2834112238CA3BD00C992F0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -61,7 +73,7 @@
 		D283413D238FB22800C992F0 /* Composer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Composer.swift; sourceTree = "<group>"; };
 		D283413F238FBE4600C992F0 /* UIButton+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Style.swift"; sourceTree = "<group>"; };
 		D2834141238FBE7800C992F0 /* UITextView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Style.swift"; sourceTree = "<group>"; };
-		D2834143238FBEA900C992F0 /* Player+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Player+Style.swift"; sourceTree = "<group>"; };
+		D2834143238FBEA900C992F0 /* PlayerContainer+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerContainer+Style.swift"; sourceTree = "<group>"; };
 		D2834145238FBF5400C992F0 /* ViewControllerPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerPreview.swift; sourceTree = "<group>"; };
 		D2834148238FC0F000C992F0 /* ViewController+SetupViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+SetupViews.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -97,7 +109,7 @@
 			children = (
 				D2834141238FBE7800C992F0 /* UITextView+Style.swift */,
 				D283413F238FBE4600C992F0 /* UIButton+Style.swift */,
-				D2834143238FBEA900C992F0 /* Player+Style.swift */,
+				D2834143238FBEA900C992F0 /* PlayerContainer+Style.swift */,
 				D243B275239331760046E61B /* ProgressBar+Style.swift */,
 			);
 			path = Styling;
@@ -129,6 +141,19 @@
 			path = "Video Composer";
 			sourceTree = "<group>";
 		};
+		D243B2802394204B0046E61B /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				D243B2812394207F0046E61B /* ControlsView.swift */,
+				D243B283239421440046E61B /* PlayerStatus.swift */,
+				D243B285239426730046E61B /* ControlsHandler.swift */,
+				D243B27E23934C3E0046E61B /* PlayerView.swift */,
+				D243B28723942A270046E61B /* Player+Style.swift */,
+				D243B28923942C600046E61B /* Player+SetupViews.swift */,
+			);
+			path = Player;
+			sourceTree = "<group>";
+		};
 		D2834104238CA3BD00C992F0 = {
 			isa = PBXGroup;
 			children = (
@@ -150,12 +175,13 @@
 		D283410F238CA3BD00C992F0 /* MemeMaker */ = {
 			isa = PBXGroup;
 			children = (
+				D243B2802394204B0046E61B /* Player */,
 				D243B27D2393393B0046E61B /* Video Composer */,
-				D243B27C239338FD0046E61B /* Resources */,
 				D243B27B239338D00046E61B /* Autolayout */,
 				D243B27A2393385D0046E61B /* Styling */,
 				D243B277239333800046E61B /* ProgressBar */,
-				D2834147238FC0C800C992F0 /* View Controller */,
+				D2834147238FC0C800C992F0 /* MemeBuilder */,
+				D243B27C239338FD0046E61B /* Resources */,
 				D2834110238CA3BD00C992F0 /* AppDelegate.swift */,
 				D2834112238CA3BD00C992F0 /* SceneDelegate.swift */,
 				D2834116238CA3BD00C992F0 /* Main.storyboard */,
@@ -175,7 +201,7 @@
 			path = MemeMakerTests;
 			sourceTree = "<group>";
 		};
-		D2834147238FC0C800C992F0 /* View Controller */ = {
+		D2834147238FC0C800C992F0 /* MemeBuilder */ = {
 			isa = PBXGroup;
 			children = (
 				D2834114238CA3BD00C992F0 /* ViewController.swift */,
@@ -183,7 +209,7 @@
 				D2834148238FC0F000C992F0 /* ViewController+SetupViews.swift */,
 				D2834145238FBF5400C992F0 /* ViewControllerPreview.swift */,
 			);
-			path = "View Controller";
+			path = MemeBuilder;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,17 +317,23 @@
 				D2834134238D06AF00C992F0 /* UIView+Autolayout.swift in Sources */,
 				D243B279239337CE0046E61B /* UIView+Stack.swift in Sources */,
 				D283413E238FB22800C992F0 /* Composer.swift in Sources */,
+				D243B27F23934C3E0046E61B /* PlayerView.swift in Sources */,
+				D243B2822394207F0046E61B /* ControlsView.swift in Sources */,
 				D283413A238FA92E00C992F0 /* ViewController+ImagePicker.swift in Sources */,
 				D283413C238FAE4200C992F0 /* Orientation.swift in Sources */,
 				D243B276239331760046E61B /* ProgressBar+Style.swift in Sources */,
 				D2834115238CA3BD00C992F0 /* ViewController.swift in Sources */,
+				D243B28A23942C600046E61B /* Player+SetupViews.swift in Sources */,
 				D2834111238CA3BD00C992F0 /* AppDelegate.swift in Sources */,
 				D2834146238FBF5400C992F0 /* ViewControllerPreview.swift in Sources */,
 				D2834142238FBE7800C992F0 /* UITextView+Style.swift in Sources */,
+				D243B286239426730046E61B /* ControlsHandler.swift in Sources */,
 				D2834113238CA3BD00C992F0 /* SceneDelegate.swift in Sources */,
-				D2834144238FBEA900C992F0 /* Player+Style.swift in Sources */,
+				D2834144238FBEA900C992F0 /* PlayerContainer+Style.swift in Sources */,
+				D243B284239421440046E61B /* PlayerStatus.swift in Sources */,
 				D2834140238FBE4600C992F0 /* UIButton+Style.swift in Sources */,
 				D2834149238FC0F000C992F0 /* ViewController+SetupViews.swift in Sources */,
+				D243B28823942A270046E61B /* Player+Style.swift in Sources */,
 				D243B274239236DA0046E61B /* ProgressView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

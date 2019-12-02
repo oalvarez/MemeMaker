@@ -54,6 +54,10 @@ extension UIView {
     anchorToSuperview(safely: safely, top: 0, leading: 0, bottom: 0, trailing: 0)
   }
   
+  func fillView(with view: UIView) {
+    addSubview(view)
+    view.fillSuperView()
+  }
   
   @discardableResult
   func anchorToSuperview<T: UIView>(safely: Bool = false,

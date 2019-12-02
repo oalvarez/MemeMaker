@@ -21,8 +21,8 @@ extension UIView {
   func completeSectionStyle() -> UIView {
     self.backgroundColor = .systemBlue
     self
-      .anchorToSuperview(top: 0, leading: 0, bottom: 0)
-      .with(width: 0)
+      .anchorToSuperview(leading: 0, bottom: 0)
+      .with(height: 2, width: 0)
     return self
   }
 }

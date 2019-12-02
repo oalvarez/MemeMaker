@@ -27,6 +27,9 @@ class ViewController: UIViewController {
   let playerContainer = UIView.playerContainer
   let dismissButton = UIButton()
   let progressBar: ProgressBar = ProgressBar(with: "Composing...")
+  let playerView = PlayerView()
+  let fontSize: CGFloat = 28
+  let fontName: String = "IMPACTED"
   
   var status: Status = .ready {
     didSet { updateView(with: status) }
@@ -44,6 +47,7 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     setupViews()
+    playerContainer.fillView(with: playerView)
   }
   
   var composer = Composer()
@@ -55,10 +59,10 @@ class ViewController: UIViewController {
     
     let textLayer = composer.createTextLayerForVideo(at:           mediaURL,
                                                      text:         textView.text,
-                                                     fontName:     "IMPACTED",
+                                                     fontSize:     fontSize,
+                                                     fontName:     fontName,
                                                      playerSize:   playerContainer.frame.size,
                                                      textViewSize: textView.frame.size)
-    
     composer.composeVideo(at: mediaURL,
                           withLayer: textLayer,
                           trackProgress: { progress in
@@ -103,7 +107,16 @@ class ViewController: UIViewController {
 extension ViewController {
   
   func preparePlayer(with url: URL) {
-    let videoWidth = getVideoWidth(ofVideoFrom: url, andPlayerFrame: playerContainer.frame)
+    
+    let videoWidth = composer.getVideoWidth(ofVideoFrom: url,
+                                            andPlayerFrame: playerContainer.frame)
+    textView.with(width: videoWidth)
+    playerView.preparePlayer(for: url)
+    playerContainer.bringSubviewToFront(textView)
+  }
+  
+  func preparePlayer2(with url: URL) {
+    let videoWidth = composer.getVideoWidth(ofVideoFrom: url, andPlayerFrame: playerContainer.frame)
     let player = AVPlayer(url: url)
     let playerLayer = AVPlayerLayer(player: player)
     
@@ -113,16 +126,6 @@ extension ViewController {
     self.playerContainer.layer.addSublayer(playerLayer)
     player.play()
     self.playerContainer.bringSubviewToFront(textView)
-  }
-  
-  func getVideoWidth(ofVideoFrom url: URL, andPlayerFrame frame: CGRect) -> CGFloat {
-    let videoAssetSource = AVAsset(url: url)
-    guard let videoTrack = videoAssetSource.tracks(withMediaType: AVMediaType.video).first else { return 0 }
-    let orientation = Orientation.getOrientation(from: videoTrack.preferredTransform)
-    let size = videoTrack.naturalSize
-    let ratio = size.height/size.width
-    if orientation == .vertical { return frame.height * ratio }
-    else                        { return frame.width }
   }
   
   override func viewDidLayoutSubviews() {

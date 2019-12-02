@@ -121,8 +121,6 @@ class Composer {
     exportSession = nil
   }
   
-  //var progressTimer = Timer()
-  
   ///Return the size of the video ar url. It varys from vertical and horizontal
   func getFinalSizeForVideo(at url: URL) -> CGSize {
     let videoAssetSource = AVAsset(url: url)
@@ -142,6 +140,7 @@ class Composer {
   ///Creates a Text Layer to add to the composition
   public func createTextLayerForVideo(at url:       URL,
                                       text:         String,
+                                      fontSize:     CGFloat,
                                       fontName:     String,
                                       playerSize:   CGSize,
                                       textViewSize: CGSize) -> CALayer {
@@ -151,8 +150,8 @@ class Composer {
     let textLayer = CATextLayer()
     textLayer.backgroundColor = UIColor.clear.cgColor
     textLayer.string = text
-    textLayer.font = UIFont(name: fontName, size: 28)
-    textLayer.fontSize = playerVideoRatio * 28
+    textLayer.font = UIFont(name: fontName, size: fontSize)
+    textLayer.fontSize = playerVideoRatio * fontSize
     textLayer.isWrapped = true
     textLayer.shadowOpacity = 0.5
     textLayer.foregroundColor = UIColor.white.cgColor
@@ -189,5 +188,15 @@ class Composer {
       if saved        { completion(.success(())) }
       else            { completion(.failure(CompositorError.unknown)) }
     }
+  }
+  
+  public func getVideoWidth(ofVideoFrom url: URL, andPlayerFrame frame: CGRect) -> CGFloat {
+    let videoAssetSource = AVAsset(url: url)
+    guard let videoTrack = videoAssetSource.tracks(withMediaType: AVMediaType.video).first else { return 0 }
+    let orientation = Orientation.getOrientation(from: videoTrack.preferredTransform)
+    let size = videoTrack.naturalSize
+    let ratio = size.height/size.width
+    if orientation == .vertical { return frame.height * ratio }
+    else                        { return frame.width }
   }
 }

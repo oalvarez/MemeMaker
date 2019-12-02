@@ -11,36 +11,36 @@ import UIKit
 extension ViewController {
   func setupViews() {
     status = .ready
-    setupDismissButton()
-    view.addVStack(playerContainer,
-                   progressBar,
-                   cancelButton,
-                   getVideoButton,
-                   composeButton,
-                   saveButton,
-                   UIView())
-    
+    setupStack()
+    setupTextView()
+    getVideoButton.addTarget(self, action: #selector(requestImage), for: .touchUpInside)
+    composeButton.addTarget(self,  action: #selector(compose), for: .touchUpInside)
+    saveButton.addTarget(self,     action: #selector(saveComposition), for: .touchUpInside)
+    cancelButton.addTarget(self,   action: #selector(cancelExport), for: .touchUpInside)
+  }
+  
+  func setupStack() {
+    let stack = UIStackView.with(
+      playerContainer,
+      progressBar,
+      cancelButton,
+      getVideoButton,
+      composeButton,
+      saveButton,
+      UIView()
+    )
+    view.fillView(with: stack)
+    let gesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+    stack.addGestureRecognizer(gesture)
     playerContainer.anchorToSuperview(leading: 0)
     progressBar.anchorToSuperview(leading: 40)
     progressBar.with(height: 36)
-    
-    setupTextView()
-    
-    getVideoButton.addTarget(self, action: #selector(requestImage), for: .touchUpInside)
-    composeButton.addTarget(self, action: #selector(compose), for: .touchUpInside)
-    saveButton.addTarget(self, action: #selector(saveComposition), for: .touchUpInside)
-    cancelButton.addTarget(self, action: #selector(cancelExport), for: .touchUpInside)
-  }
-  
-  func setupDismissButton() {
-    view.addSubview(dismissButton)
-    dismissButton.fillSuperView()
-    dismissButton.addTarget(self, action: #selector(dismissKeyboard), for: .touchUpInside)
   }
   
   func setupTextView() {
     playerContainer.addSubview(textView)
     textView
+    .font(named: fontName, withSize: fontSize)
       .anchorToSuperview(bottom: 10)
       .centerInSuperview(vertically: false)
   }

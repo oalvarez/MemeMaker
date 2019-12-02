@@ -11,13 +11,17 @@ import UIKit
 extension UITextView {
   static func memeText(withTitle title: String) -> UITextView {
     let textView = UITextView()
-    textView.font = UIFont(name: "IMPACTED", size: 28)
     textView.textAlignment = .center
-    textView.text = "Introduce Text"
+    textView.text = title
     textView.backgroundColor = .clear
     textView.textColor = .white
     textView.isScrollEnabled = false
     textView.sizeToFit()
     return textView
+  }
+  
+  func font(named fontName: String, withSize size: CGFloat) -> UITextView {
+    font = UIFont(name: fontName, size: size)
+    return self
   }
 }

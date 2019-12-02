@@ -8,19 +8,18 @@
 
 import UIKit
 
-extension UIView {
+extension UIStackView {
   @discardableResult
-  func addVStack(_ views: UIView...,
-                   spacing: CGFloat = 16,
-                   alignment: UIStackView.Alignment = .center,
-                   distribution: UIStackView.Distribution = .fill) -> UIStackView {
+  static func with(_ views: UIView...,
+               axis: NSLayoutConstraint.Axis = .vertical,
+               spacing: CGFloat = 16,
+               alignment: UIStackView.Alignment = .center,
+               distribution: UIStackView.Distribution = .fill) -> UIStackView {
     let stackView = UIStackView(arrangedSubviews: views)
-    stackView.axis = .vertical
+    stackView.axis = axis
     stackView.spacing = spacing
     stackView.alignment = alignment
     stackView.distribution = distribution
-    addSubview(stackView)
-    stackView.fillSuperView()
     return stackView
   }
 }
